@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://res/Missile/Missile.gd" type="Script" id=1]
+[ext_resource path="res://res/Jet/Jet.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.1
+mid_height = 1.5
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.05, 0.4, 0.12 )
+
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.196232
+height = 1.37362
+
+[node name="Missile" type="Area" groups=[
+"Missiles",
+]]
+script = ExtResource( 1 )
+
+[node name="Visualization" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Visualization"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="BackWings" type="Spatial" parent="Visualization"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.706697 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Visualization/BackWings"]
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visualization/BackWings"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="FrontWings" type="Spatial" parent="Visualization"]
+transform = Transform( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, -0.0162991 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Visualization/FrontWings"]
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visualization/FrontWings"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
+
+[node name="Jet" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.99732 )
+emitting = false
+[connection signal="area_shape_entered" from="." to="." method="_on_Missile_area_shape_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Missile_body_entered"]

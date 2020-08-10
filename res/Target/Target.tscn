@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://res/Target/Visualizer.gd" type="Script" id=1]
+[ext_resource path="res://res/Target/Target.gd" type="Script" id=2]
+[ext_resource path="res://res/Explotion/Explotion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Sound/Explotion.wav" type="AudioStream" id=4]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 2.37639
+height = 0.868495
+
+[node name="Target" type="Area"]
+script = ExtResource( 2 )
+
+[node name="Visualizer" type="Spatial" parent="."]
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Visualizer"]
+transform = Transform( 0.707107, 0.5, 0.5, -0.707107, 0.5, 0.5, 0, -0.707107, 0.707107, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Explotion" parent="." instance=ExtResource( 3 )]
+
+[node name="ExplotionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+[connection signal="area_entered" from="." to="." method="_on_Target_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Target_body_entered"]

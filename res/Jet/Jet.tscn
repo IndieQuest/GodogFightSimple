@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+size = Vector2( 0.3, 0.3 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.754545 ), 0.0, 0.0, 0, 0, Vector2( 0.402299, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.636364 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.0993377, 0.350993, 0.503311, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.957031, 0.712721, 0.0635529, 1, 0.63833, 0.79202, 0.902832, 1, 0.925781, 0.720131, 0.0180817, 1, 0, 0, 0, 1 )
+
+[node name="Jet" type="CPUParticles"]
+cast_shadow = 0
+amount = 300
+lifetime = 0.1
+randomness = 1.0
+local_coords = false
+draw_order = 2
+mesh = SubResource( 2 )
+emission_shape = 2
+emission_box_extents = Vector3( 0.2, 0.2, 1 )
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 300.0
+angular_velocity_random = 1.0
+angle = 180.0
+angle_random = 1.0
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
