@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://res/Missile/Missile.gd" type="Script" id=1]
 [ext_resource path="res://res/Jet/Jet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sound/MissileLunch.wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.1
@@ -18,6 +19,7 @@ height = 1.37362
 "Missiles",
 ]]
 script = ExtResource( 1 )
+lifetime = 5.0
 
 [node name="Visualization" type="Spatial" parent="."]
 
@@ -63,9 +65,13 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
+disabled = true
 
 [node name="Jet" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.99732 )
 emitting = false
+
+[node name="LunchSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 [connection signal="area_shape_entered" from="." to="." method="_on_Missile_area_shape_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Missile_body_entered"]

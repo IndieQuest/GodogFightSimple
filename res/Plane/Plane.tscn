@@ -1,0 +1,126 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://res/MachineGun/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://res/Jet/Jet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://res/MachineGun/Gun.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Sound/MachineGunLoop.wav" type="AudioStream" id=4]
+[ext_resource path="res://res/TrailRenderScriptClass/TrailRender.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Sound/Engine.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Sound/Jet.wav" type="AudioStream" id=7]
+[ext_resource path="res://res/Plane/Plane.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Images/BoreSight.png" type="Texture" id=9]
+[ext_resource path="res://res/Missile/MissileLuncher.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Sound/Locked.wav" type="AudioStream" id=11]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 0.5, 0.5, 3 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 3.5, 0.1, 0.8 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0.505155, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Shader" id=6]
+code = "shader_type spatial;
+
+uniform vec4 color: hint_color = vec4(0.4, 0.4, 0.4, 1.0);
+
+void fragment() {
+	ALBEDO = color.rgb;
+	ALPHA = 1.0 - UV.y;
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/color = Color( 0.4, 0.4, 0.4, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 2, 0.1, 0.5 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 0.1, 0.3, 0.4 )
+
+[node name="Plane" type="Spatial"]
+script = ExtResource( 8 )
+
+[node name="Visualizer" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Visualizer"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Wings" type="MeshInstance" parent="Visualizer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0143918 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="TrailRenderer" type="Spatial" parent="Visualizer/Wings"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -1.74924, 0, 0.397 )
+script = ExtResource( 5 )
+width = 0.2
+width_curve = SubResource( 5 )
+max_points = 30
+material = SubResource( 7 )
+
+[node name="TrailRenderer2" type="Spatial" parent="Visualizer/Wings"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.74291, 0, 0.392483 )
+script = ExtResource( 5 )
+width = 0.2
+width_curve = SubResource( 5 )
+max_points = 30
+material = SubResource( 7 )
+
+[node name="Tail" type="MeshInstance" parent="Visualizer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.068902, 1.0957 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="MeshInstance" type="MeshInstance" parent="Visualizer/Tail"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.295365, 0.0642531 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Jet" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73737 )
+emitting = false
+
+[node name="Gun" type="Spatial" parent="."]
+script = ExtResource( 3 )
+listem_to_input = true
+fire_action_name = "fire"
+bullet_res = ExtResource( 1 )
+muzzle_velocity = 40.0
+fire_rate = 6.0
+fire_sound = ExtResource( 4 )
+
+[node name="Missiles" type="Spatial" parent="."]
+
+[node name="MissileLuncher" parent="Missiles" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, -0.32, 0 )
+
+[node name="MissileLuncher2" parent="Missiles" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, -0.32, 0 )
+
+[node name="DemiTarget" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1000 )
+
+[node name="EngineSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
+
+[node name="JetSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="LockSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="BoreSight" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}

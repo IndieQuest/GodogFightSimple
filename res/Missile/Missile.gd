@@ -41,7 +41,9 @@ func _physics_process(delta: float) -> void:
 ############################
 func fire(target: Spatial) -> void:
 	self.target = target
+	$CollisionShape.disabled = false
 	$Jet.emitting = true
+	$LunchSound.play()
 	set_as_toplevel(true)
 	velocity = -transform.basis.z * 0.2 * speed
 	yield(get_tree().create_timer(lifetime), "timeout")
@@ -56,11 +58,13 @@ func _explode() -> void:
 # EVENTS HANDALING
 ############################
 func _on_Missile_area_shape_entered(area_id: int, area: Area, area_shape: int, self_shape: int) -> void:
-	_explode()
+	if area.is_in_group("Targets"):
+		_explode()
 
 
 func _on_Missile_body_entered(body: Node) -> void:
-	_explode()
+	if body.is_in_group("Targets"):
+		_explode()
 
 
 

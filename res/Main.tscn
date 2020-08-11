@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://res/Scene/Ground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://res/Scene/Cube.tscn" type="PackedScene" id=2]
+[ext_resource path="res://res/Plane/Plane.tscn" type="PackedScene" id=3]
+[ext_resource path="res://res/Plane/PlaneController.gd" type="Script" id=4]
+[ext_resource path="res://res/Targets.gd" type="Script" id=5]
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Spatial" parent="."]
+
+[node name="Scene" type="Spatial" parent="World"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Ground" parent="World/Scene" instance=ExtResource( 1 )]
+
+[node name="Cubes" type="Spatial" parent="World/Scene"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Cube" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="Cube2" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8845, 0.5, -13.9297 )
+
+[node name="Cube3" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29348, 0.5, -27.1629 )
+
+[node name="Cube4" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6352, 0.5, -15.5216 )
+
+[node name="Cube5" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.18393, 0.5, 23.8794 )
+
+[node name="Cube6" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, -52.7338, 0.5, 2.38794 )
+
+[node name="Cube7" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, -50.9428, 0.5, -30.1478 )
+
+[node name="Cube8" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, 32.3468, 0.5, -67.2628 )
+
+[node name="Cube9" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, 72.6765, 0.5, 16.319 )
+
+[node name="Cube10" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, -43.0522, 0.5, 95.225 )
+
+[node name="Cube11" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.737148, 2.76389e-08, 0.675732, -3.09086e-08, 1, -7.462e-08, -0.675732, -7.58919e-08, -0.737148, -86.3044, 0.5, 22.4561 )
+
+[node name="Cube12" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.300523, 4.00262e-08, 0.953775, -4.30623e-08, 1, -5.55345e-08, -0.953775, -5.77611e-08, -0.300523, 36.7305, 0.5, 59.5712 )
+
+[node name="Cube13" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.300523, 4.00262e-08, 0.953775, -4.30623e-08, 1, -5.55345e-08, -0.953775, -5.77611e-08, -0.300523, -40.1298, 0.5, -62.5869 )
+
+[node name="Cube14" parent="World/Scene/Cubes" instance=ExtResource( 2 )]
+transform = Transform( -0.300523, 4.00262e-08, 0.953775, -4.30623e-08, 1, -5.55345e-08, -0.953775, -5.77611e-08, -0.300523, -95.9484, 0.5, -26.3486 )
+
+[node name="Targets" type="Spatial" parent="World"]
+script = ExtResource( 5 )
+
+[node name="Camera" type="Camera" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.29682, 226.351 )
+fov = 100.0
+far = 400.0
+script = ExtResource( 4 )
+speed = 20.0
+yaw_speed = 30.0
+max_yaw = 10.0
+max_roll = 110.0
+pitch_speed = 30.0
+max_pitch = 10.0
+
+[node name="Plane" parent="World/Camera" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25019, -7.28446 )

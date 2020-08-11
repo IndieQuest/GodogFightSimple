@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://res/MachineGun/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://res/TrailRenderScriptClass/TrailRender.gd" type="Script" id=2]
+
+[sub_resource type="PhysicsMaterial" id=6]
+friction = 0.0
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.968627, 0.952941, 0.0470588, 1 )
+emission_enabled = true
+emission = Color( 0.917647, 0.580392, 0.105882, 1 )
+emission_energy = 2.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CapsuleMesh" id=2]
+material = SubResource( 1 )
+radius = 0.1
+mid_height = 0.3
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.438144, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.862745, 0.862745, 0.682353, 1 )
+
+[sub_resource type="CapsuleShape" id=5]
+radius = 0.169384
+height = 2.70865
+
+[node name="Bullet" type="RigidBody" groups=[
+"Bullets",
+]]
+physics_material_override = SubResource( 6 )
+gravity_scale = 0.0
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="TrailRenderer" type="Spatial" parent="."]
+script = ExtResource( 2 )
+width = 0.1
+width_curve = SubResource( 3 )
+max_points = 20
+material = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 5 )
