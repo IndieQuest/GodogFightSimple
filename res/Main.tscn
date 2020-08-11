@@ -81,3 +81,5 @@ max_pitch = 10.0
 
 [node name="Plane" parent="World/Camera" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25019, -7.28446 )
+
+[node name="JetTimer" type="Timer" parent="World/Camera"]

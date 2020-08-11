@@ -18,10 +18,10 @@ size = Vector3( 0.5, 0.5, 3 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 3.5, 0.1, 0.8 )
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0.505155, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=4]
 code = "shader_type spatial;
 
 uniform vec4 color: hint_color = vec4(0.4, 0.4, 0.4, 1.0);
@@ -31,14 +31,14 @@ void fragment() {
 	ALPHA = 1.0 - UV.y;
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/color = Color( 0.4, 0.4, 0.4, 1 )
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=6]
 size = Vector3( 2, 0.1, 0.5 )
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="CubeMesh" id=7]
 size = Vector3( 0.1, 0.3, 0.4 )
 
 [node name="Plane" type="Spatial"]
@@ -59,26 +59,26 @@ material/0 = null
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -1.74924, 0, 0.397 )
 script = ExtResource( 5 )
 width = 0.2
-width_curve = SubResource( 5 )
+width_curve = SubResource( 3 )
 max_points = 30
-material = SubResource( 7 )
+material = SubResource( 5 )
 
 [node name="TrailRenderer2" type="Spatial" parent="Visualizer/Wings"]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.74291, 0, 0.392483 )
 script = ExtResource( 5 )
 width = 0.2
-width_curve = SubResource( 5 )
+width_curve = SubResource( 3 )
 max_points = 30
-material = SubResource( 7 )
+material = SubResource( 5 )
 
 [node name="Tail" type="MeshInstance" parent="Visualizer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.068902, 1.0957 )
-mesh = SubResource( 3 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [node name="MeshInstance" type="MeshInstance" parent="Visualizer/Tail"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.295365, 0.0642531 )
-mesh = SubResource( 4 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="Jet" parent="." instance=ExtResource( 2 )]
@@ -90,7 +90,7 @@ script = ExtResource( 3 )
 listem_to_input = true
 fire_action_name = "fire"
 bullet_res = ExtResource( 1 )
-muzzle_velocity = 40.0
+muzzle_velocity = 80.0
 fire_rate = 6.0
 fire_sound = ExtResource( 4 )
 

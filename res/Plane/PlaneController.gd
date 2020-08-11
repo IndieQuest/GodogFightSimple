@@ -22,11 +22,17 @@ export (float, 3, 10, 0.5) var turbo_time = 5
 # PARAMS
 #########################
 onready var model = $Plane
+onready var jet_timer = $JetTimer
+var is_in_turbo: bool = false
 
 
 #########################
 # OVERRIDE FUNCTIONS
 #########################
+func _ready() -> void:
+	jet_timer.connect("timeout", self, "_turbo_off")
+
+
 func _process(delta: float) -> void:
 	_move(delta)
 	_pitch(delta)
@@ -34,12 +40,8 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("turbo"):
-		$Plane/JetEngine.emitting = true
-		$Plane/JetEngine2.emitting = true
-	if event.is_action_released("turbo"):
-		$Plane/JetEngine.emitting = false
-		$Plane/JetEngine2.emitting = false
+	if event.is_action_pressed("turbo") and not is_in_turbo:
+		_turbo_on()
 
 
 
@@ -48,7 +50,7 @@ func _input(event: InputEvent) -> void:
 #########################
 func _move(delta: float) -> void:
 	var velocity = transform.basis.z * delta * speed
-	if Input.is_action_pressed("turbo"):
+	if is_in_turbo:
 		velocity *= turbo_modifier
 	translation -= velocity
 
@@ -83,6 +85,18 @@ func _get_mouse_speed() -> Vector2:
 	displacment.x /= screen_center.x
 	displacment.y /= screen_center.y
 	return displacment
+
+
+func _turbo_on() -> void:
+	is_in_turbo = true
+	model.jet_on()
+	jet_timer.start(turbo_time)
+
+
+func _turbo_off() -> void:
+	jet_timer.stop()
+	is_in_turbo = false
+	model.jet_off()
 
 
 
